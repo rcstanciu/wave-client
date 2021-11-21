@@ -16,7 +16,7 @@ const MetamaskInstall = () => {
         <div className="column is-narrow">
           <Link href="https://metamask.io" passHref>
             <a target="_blank" className={styles.link}>
-              <p>Install MetaMask</p>
+              <p>install metamask</p>
             </a>
           </Link>
         </div>

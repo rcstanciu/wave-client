@@ -35,3 +35,18 @@
     opacity: 1;
   }
 }
+
+.viewMore {
+  padding-top: 1rem;
+
+  p {
+    cursor: pointer;
+
+    &:hover,
+    &:focus,
+    &:active {
+      color: hsl(0, 0%, 96%) !important;
+      text-decoration: underline;
+    }
+  }
+}

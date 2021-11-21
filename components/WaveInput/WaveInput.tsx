@@ -39,7 +39,7 @@ const WaveInput = (): React.FC => {
             <input
               className="input"
               type="text"
-              placeholder="Hello!"
+              placeholder="hello!"
               value={message}
               onChange={(e) => setMessage(e.target.value)}
             />
@@ -51,7 +51,7 @@ const WaveInput = (): React.FC => {
               disabled={!message.length || !currentAccount}
               type="submit"
             >
-              Send
+              send
             </button>
           </div>
         </div>

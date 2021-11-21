@@ -4,7 +4,6 @@ import Image from "next/image";
 import Footer from "../components/Footer/Footer";
 import Header from "../components/Header/Header";
 import Wave from "../components/Wave/Wave";
-import WavesList from "../components/WavesList/WavesList";
 
 const Home: NextPage = () => {
   return (
@@ -16,7 +15,6 @@ const Home: NextPage = () => {
       </Head>
       <Header />
       <Wave />
-      <WavesList />
       <Footer />
     </>
   );

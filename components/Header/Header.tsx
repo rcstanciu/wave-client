@@ -27,7 +27,7 @@ const Header = (): React.FC => {
       <div className="level-right">
         <div className={styles.button} onClick={handleOnConnect}>
           <span className="is-size-6">
-            {currentAccount ? shorten(currentAccount) : "Connect wallet"}
+            {currentAccount ? shorten(currentAccount) : "connect wallet"}
           </span>
         </div>
       </div>
