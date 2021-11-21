@@ -10,7 +10,7 @@ const Footer = () => {
         <div className="columns is-centered">
           <div className="column is-half has-text-centered">
             <Link href="https://github.com/rcstanciu/wave-client" passHref>
-              <a className={styles.socialLink}>
+              <a className={styles.socialLink} target="_blank">
                 <FaGithub />
               </a>
             </Link>
