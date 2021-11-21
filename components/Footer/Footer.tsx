@@ -5,7 +5,7 @@ import Link from "next/link";
 
 const Footer = () => {
   return (
-    <div className="section has-text-grey-light">
+    <footer className="footer has-background-dark has-text-grey-light">
       <div className="container">
         <div className="columns is-centered">
           <div className="column is-half has-text-centered">
@@ -17,7 +17,7 @@ const Footer = () => {
           </div>
         </div>
       </div>
-    </div>
+    </footer>
   );
 };
 
