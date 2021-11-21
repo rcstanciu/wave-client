@@ -1,0 +1,37 @@
+.event {
+  margin-bottom: 1rem;
+  opacity: 0;
+  -webkit-animation: fadeIn 0.9s 1;
+  animation: fadeIn 0.9s 1;
+  -webkit-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
+}
+
+.address {
+  color: #7a7a7a;
+
+  &:hover,
+  &:focus,
+  &:active {
+    color: hsl(0, 0%, 96%);
+    text-decoration: underline;
+  }
+}
+
+@-webkit-keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}

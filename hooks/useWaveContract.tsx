@@ -9,11 +9,18 @@ import React, {
 } from "react";
 import { ethers, BigNumber } from "ethers";
 import WavePortalABI from "../abi/WavePortal.json";
+import useWallet from "./useWallet";
 
 interface WaveContractContextType {
   contract: ethers.Contract | null;
   totalWaves: BigNumber | null;
-  wave: () => Promise<void>;
+  wave: (message: string) => Promise<void>;
+  waves: Array<{
+    address: string;
+    timestamp: BigNumber;
+    message: string;
+    transactionHash: string;
+  }>;
 }
 
 const WaveContractContext = createContext<WaveContractContextType>(
@@ -27,8 +34,21 @@ export function WaveContractProvider({
 }): JSX.Element {
   const [contract, setContract] = useState<ethers.Contract | null>(null);
   const [totalWaves, setTotalWaves] = useState(BigNumber.from(0));
+  const { currentAccount } = useWallet();
+  const [waves, setWaves] = useState<
+    Array<{
+      address: string;
+      timestamp: BigNumber;
+      message: string;
+      transactionHash: string;
+    }>
+  >([]);
 
   useEffect(() => {
+    if (!currentAccount) {
+      return;
+    }
+
     try {
       const { ethereum } = window;
 
@@ -48,15 +68,27 @@ export function WaveContractProvider({
     } catch (error) {
       console.error(error);
     }
-  }, []);
+  }, [currentAccount]);
 
   const getTotalWaves = useCallback(async (): number | null => {
     if (!contract) {
       return null;
     }
     const res = await contract.getTotalWaves();
-    console.log(res);
     setTotalWaves(res);
+
+    const waveEventFilter = contract.filters.Wave();
+    const waves = [...(await contract.queryFilter(waveEventFilter))];
+    waves.sort((a, b) => b.blockNumber - a.blockNumber);
+
+    console.log(waves[0]);
+    const parsedWaves = waves.map((item) => ({
+      address: item.args[0],
+      timestamp: item.args[1],
+      message: item.args[2],
+      transactionHash: item.transactionHash,
+    }));
+    setWaves(parsedWaves);
   }, [contract]);
 
   useEffect(() => {
@@ -65,27 +97,29 @@ export function WaveContractProvider({
     }
   }, [contract, getTotalWaves]);
 
-  const wave = useCallback(async () => {
-    if (!contract) {
-      return;
-    }
+  const wave = useCallback(
+    async (message: string) => {
+      if (!contract) {
+        return;
+      }
 
-    console.log("Sending wave");
-    const res = await contract.wave();
-    console.log("Created tx", res);
-    const txRes = await res.wait();
-    console.log("Txres", txRes);
+      const res = await contract.wave(message);
+      const txRes = await res.wait();
+      console.log(txRes);
 
-    getTotalWaves();
-  }, [contract, getTotalWaves]);
+      getTotalWaves();
+    },
+    [contract, getTotalWaves]
+  );
 
   const waveContractContext = useMemo(
     () => ({
       contract,
       totalWaves,
       wave,
+      waves,
     }),
-    [contract, totalWaves, wave]
+    [contract, totalWaves, wave, waves]
   );
 
   return (

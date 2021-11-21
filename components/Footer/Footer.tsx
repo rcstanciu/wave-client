@@ -5,7 +5,7 @@ import Link from "next/link";
 
 const Footer = (): React.FC => {
   return (
-    <footer className="footer has-background-dark has-text-grey-light mt-6">
+    <footer className="footer has-background-dark has-text-grey-light mt-4">
       <div className="container mt-6">
         <div className="columns is-centered">
           <div className="column is-half has-text-centered">
