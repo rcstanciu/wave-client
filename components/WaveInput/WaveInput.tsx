@@ -3,7 +3,7 @@ import styles from "./WaveInput.module.scss";
 import useWaveContract from "../../hooks/useWaveContract";
 import useWallet from "../../hooks/useWallet";
 
-const WaveInput = (): React.FC => {
+const WaveInput = (): JSX.Element => {
   const [isSending, setIsSending] = useState(false);
   const [message, setMessage] = useState<string>("");
 

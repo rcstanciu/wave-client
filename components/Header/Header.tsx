@@ -5,7 +5,7 @@ import Link from "next/link";
 import useWallet from "../../hooks/useWallet";
 import shorten from "../../utils/shorten";
 
-const Header = (): React.FC => {
+const Header = (): JSX.Element => {
   const { hasMetamask, connectWallet, isConnected, currentAccount } =
     useWallet();
 
@@ -18,7 +18,7 @@ const Header = (): React.FC => {
   }, [isConnected, connectWallet]);
 
   if (!hasMetamask) {
-    return null;
+    return null!;
   }
 
   return (

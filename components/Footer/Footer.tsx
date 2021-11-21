@@ -3,7 +3,7 @@ import { FaGithub } from "react-icons/fa";
 import styles from "./Footer.module.scss";
 import Link from "next/link";
 
-const Footer = (): React.FC => {
+const Footer = (): JSX.Element => {
   return (
     <footer className="footer has-background-dark has-text-grey-light">
       <div className="container">

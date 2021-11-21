@@ -18,7 +18,7 @@ const WavesList = () => {
       <div className="columns is-centered">
         <div className="column is-two-thirds has-text-centered">
           <p className="is-size-7 has-text-grey mb-5">
-            total waves: {totalWaves.toString()}
+            total waves: {totalWaves?.toString()}
           </p>
           {visibleWaves.map((item) => (
             <div key={item.transactionHash} className={styles.event}>

@@ -10,8 +10,8 @@ import React, {
 
 interface WalletContextType {
   hasMetamask: boolean;
-  connectWallet: () => null;
-  currentAccount: string;
+  connectWallet: () => Promise<void>;
+  currentAccount: string | null;
   isConnected: boolean;
 }
 
@@ -27,7 +27,7 @@ export function WalletProvider({
 
   useEffect(() => {
     (async () => {
-      const { ethereum } = window;
+      const { ethereum } = window as any;
 
       if (!ethereum) {
         return;
@@ -47,8 +47,8 @@ export function WalletProvider({
     })();
   }, []);
 
-  const connectWallet = useCallback(async () => {
-    const { ethereum } = window;
+  const connectWallet = useCallback(async (): Promise<void> => {
+    const { ethereum } = window as any;
 
     if (!ethereum) {
       return;

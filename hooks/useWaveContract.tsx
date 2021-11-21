@@ -50,7 +50,7 @@ export function WaveContractProvider({
     }
 
     try {
-      const { ethereum } = window;
+      const { ethereum } = window as any;
 
       if (!ethereum) {
         return;
@@ -59,7 +59,7 @@ export function WaveContractProvider({
       const provider = new ethers.providers.Web3Provider(ethereum);
       const signer = provider.getSigner();
       const wavePortalContract = new ethers.Contract(
-        process.env.NEXT_PUBLIC_WAVE_PORTAL_CONTRACT_ADDRESS,
+        String(process.env.NEXT_PUBLIC_WAVE_PORTAL_CONTRACT_ADDRESS),
         WavePortalABI.abi,
         signer
       );
@@ -70,7 +70,7 @@ export function WaveContractProvider({
     }
   }, [currentAccount]);
 
-  const getTotalWaves = useCallback(async (): number | null => {
+  const getTotalWaves = useCallback(async () => {
     if (!contract) {
       return null;
     }
@@ -82,10 +82,10 @@ export function WaveContractProvider({
     waves.sort((a, b) => b.blockNumber - a.blockNumber);
 
     const parsedWaves = waves.map((item) => ({
-      address: item.args[0],
-      timestamp: item.args[1],
-      message: item.args[2],
-      transactionHash: item.transactionHash,
+      address: String(item?.args?.[0]),
+      timestamp: item?.args?.[1] as BigNumber,
+      message: String(item?.args?.[2]),
+      transactionHash: String(item?.transactionHash),
     }));
     setWaves(parsedWaves);
   }, [contract]);
