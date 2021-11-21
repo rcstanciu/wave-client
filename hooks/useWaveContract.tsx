@@ -78,10 +78,9 @@ export function WaveContractProvider({
     setTotalWaves(res);
 
     const waveEventFilter = contract.filters.Wave();
-    const waves = [...(await contract.queryFilter(waveEventFilter))];
+    const waves = await contract.queryFilter(waveEventFilter);
     waves.sort((a, b) => b.blockNumber - a.blockNumber);
 
-    console.log(waves[0]);
     const parsedWaves = waves.map((item) => ({
       address: item.args[0],
       timestamp: item.args[1],
@@ -94,6 +93,7 @@ export function WaveContractProvider({
   useEffect(() => {
     if (contract) {
       getTotalWaves();
+      contract.on("Wave", getTotalWaves);
     }
   }, [contract, getTotalWaves]);
 
