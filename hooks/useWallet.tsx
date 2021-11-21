@@ -10,6 +10,9 @@ import React, {
 
 interface WalletContextType {
   hasMetamask: boolean;
+  connectWallet: () => null;
+  currentAccount: string;
+  isConnected: boolean;
 }
 
 const WalletContext = createContext<WalletContextType>({} as WalletContextType);
@@ -20,16 +23,56 @@ export function WalletProvider({
   children: ReactNode;
 }): JSX.Element {
   const [hasMetamask, setHasMetamask] = useState(false);
+  const [currentAccount, setCurrentAccount] = useState(null);
 
   useEffect(() => {
-    const { ethereum } = window;
+    (async () => {
+      const { ethereum } = window;
 
-    if (ethereum) {
+      if (!ethereum) {
+        return;
+      }
       setHasMetamask(true);
-    }
+
+      // Check if we are authorized to access user's wallet
+      const accounts = await ethereum.request({ method: "eth_accounts" });
+
+      if (!accounts && !accounts.length) {
+        return;
+      }
+
+      const account = accounts?.[0];
+
+      setCurrentAccount(account);
+    })();
   }, []);
 
-  const walletContext = useMemo(() => ({ hasMetamask }), [hasMetamask]);
+  const connectWallet = useCallback(async () => {
+    const { ethereum } = window;
+
+    if (!ethereum) {
+      return;
+    }
+
+    const accounts = await ethereum.request({ method: "eth_requestAccounts" });
+    if (!accounts && !accounts.length) {
+      return;
+    }
+
+    const account = accounts?.[0];
+
+    setCurrentAccount(account);
+  }, [setCurrentAccount]);
+
+  const walletContext = useMemo(
+    () => ({
+      hasMetamask,
+      connectWallet,
+      currentAccount,
+      isConnected: !!currentAccount,
+    }),
+    [hasMetamask, connectWallet, currentAccount]
+  );
 
   return (
     <WalletContext.Provider value={walletContext}>

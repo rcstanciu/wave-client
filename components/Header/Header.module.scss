@@ -1,0 +1,11 @@
+.button {
+  span {
+    cursor: pointer;
+
+    &:hover,
+    &:focus,
+    &:active {
+      text-decoration: underline;
+    }
+  }
+}

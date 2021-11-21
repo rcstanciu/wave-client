@@ -6,6 +6,7 @@ import WaveInput from "../WaveInput/WaveInput";
 const Wave: React.FC = () => {
   const { hasMetamask } = useWallet();
 
+
   return (
     <div className="section has-text-light">
       <div className="container">
