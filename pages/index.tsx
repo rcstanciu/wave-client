@@ -9,7 +9,7 @@ const Home: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Say hi!</title>
+        <title>say hi!</title>
         <meta name="description" content="Wave portal client" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
